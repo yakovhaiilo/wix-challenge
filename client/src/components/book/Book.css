@@ -1,0 +1,26 @@
+.book {
+    max-width: 300px;
+    background-color:white;
+    border: 1px solid lightgray;
+    margin: 10px;
+}
+.book__image {
+    width: 300px;
+    height: 250px;
+    object-fit: contain;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+.book__publish_year {
+    font-weight: normal;
+    padding: 20px;
+}
+
+.book__header {
+    display: flex;
+    align-items: center;
+    padding: 20px 10px;
+}
+.book__avatar {
+    margin-right: 10px;
+}

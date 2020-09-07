@@ -1,36 +1,23 @@
 import React from "react";
-import * as style from "./App.module.scss";
 import { Switch, Route } from "react-router-dom";
-import { Collections } from "./pages/Collections";
-import { BooksSearch } from "./pages/BooksSearch";
+import { Collections } from "./pages/Collections/Collections";
+import { BooksSearch } from "./pages/BooksSearch/BooksSearch";
 import { Header } from "./components/Header";
+import CollectionContextProvider from './context/CollectionContext'
 
 const App = () => {
   return (
-    <div className={style.app}>
+    <div className="app">
       <Header />
+      <CollectionContextProvider>
       <main>
         <Switch>
-          <Route
-            exact
-            path="/search"
-            render={(props) => (
-              <BooksSearch {...props} />
-            )}
-          />
-          <Route
-            exact
-            path="/collections"
-            render={(props) => (<Collections {...props}/>)}
-          />
-          <Route
-            path="/"
-            render={(props) => (
-              <BooksSearch {...props}/>
-            )}
-          />
+          <Route exact path="/search" render={(props) => (<BooksSearch {...props} />)}/>
+          <Route exac path="/collections"render={(props) => (<Collections {...props}/>)}/>
+          <Route path="/" render={(props) => (<BooksSearch {...props}/>)}/>
         </Switch>
       </main>
+      </CollectionContextProvider>
     </div>
   );
 }
