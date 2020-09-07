@@ -8,8 +8,8 @@ import CollectionContextProvider from './context/CollectionContext'
 const App = () => {
   return (
     <div className="app">
+    <CollectionContextProvider>
       <Header />
-      <CollectionContextProvider>
       <main>
         <Switch>
           <Route exact path="/search" render={(props) => (<BooksSearch {...props} />)}/>

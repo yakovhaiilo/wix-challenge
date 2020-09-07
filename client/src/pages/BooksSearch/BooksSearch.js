@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
 
 import { Container, Grid } from "@material-ui/core";
 import Book from "../../components/book/Book";
@@ -27,6 +28,7 @@ export const BooksSearch = () => {
       setIsLoading(false);
     }
   };
+  // console.log(books);
   return (
     <div className="booksSearch">
       <div className="booksSearch__box">
@@ -48,12 +50,13 @@ export const BooksSearch = () => {
         >
           {!isLoading ? (
             books.map((book, i) => (
-              <div key={i}>
+              <div key={uuidv4()}>
                 <Book
-                  index={i}
+                  id={uuidv4()}
                   edition_key={book.cover_edition_key}
                   publish_year={book.first_publish_year}
                   author={book.author_name}
+                  book={book}
                 />
               </div>
             ))

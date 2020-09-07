@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
+
+import { collectionContext } from "../../context/CollectionContext";
 
 import "./Book.css";
 import noImage from "../../images/noimage.jpg";
 
-const Book = ({ edition_key, publish_year, author }) => {
+const Book = ({ edition_key, book, publish_year, author, id }) => {
+  const context = useContext(collectionContext);
+
+  function onAdd(e) {
+    const colId = e.target.value;
+    console.log(colId)
+    context.addBook(colId, book);
+  }
   return (
     <div className="book">
       <div className="book__header">
@@ -20,6 +29,11 @@ const Book = ({ edition_key, publish_year, author }) => {
         <h4>
           {" "}
           <strong>author:</strong> {author}
+          <select onChange={onAdd}>
+            {context.collection.map((c) => (
+               <option value={c.id}>{c.name}</option>
+            ))}
+          </select>
         </h4>
       </div>
       <img
