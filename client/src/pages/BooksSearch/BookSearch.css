@@ -1,13 +1,10 @@
-.booksSearch {
-   
-}
 
-.booksSearch__box {
+.booksSearch__form{
     margin-bottom: 40px;
-    background-color: lightgray;
     padding: 40px;
 }
-.booksSearch__txt {
-    font-size: 20px;
-    box-sizing: border-box;
+
+.booksSearch__form button {
+   margin-left: 10px;
+   margin-top: 12px;
 }

@@ -1,54 +1,87 @@
 import React, { useContext } from "react";
-import Avatar from "@material-ui/core/Avatar";
-
 import { collectionContext } from "../../context/CollectionContext";
 
-import "./Book.css";
 import noImage from "../../images/noimage.jpg";
+import useStyles from "./useStyle";
 
-const Book = ({ edition_key, book, publish_year, author, id }) => {
+// MuI
+
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+
+const Book = ({ book, collection }) => {
+  const { first_publish_year, author_name, cover_edition_key } = book;
+  const classes = useStyles();
   const context = useContext(collectionContext);
 
   function onAdd(e) {
     const colId = e.target.value;
-    console.log(colId)
-    context.addBook(colId, book);
+    if (!colId) return;
+    context.addBook(colId, book, collection);
   }
+
   return (
     <div className="book">
-      <div className="book__header">
-        <Avatar
-          className="book__avatar"
-          alt="avatar"
-          src={
-            edition_key
-              ? `http://covers.openlibrary.org/b/olid/${edition_key}-M.jpg`
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label="recipe"
+              src={
+                cover_edition_key
+                  ? `http://covers.openlibrary.org/b/olid/${cover_edition_key}-M.jpg`
+                  : noImage
+              }
+            />
+          }
+          title={`Publish year : ${first_publish_year}`}
+        />
+        <div className="book__action">
+        {collection && (
+          <IconButton  onClick={() => {
+            context.removeBook(collection.id, book.key);
+          }} >
+               <DeleteIcon />
+          </IconButton>
+        )}
+   
+
+        <InputLabel htmlFor="grouped-select">collection</InputLabel>
+          <Select defaultValue="" id="grouped-select" onChange={onAdd} >
+          {!collection && <MenuItem value=""><em>Select collection</em></MenuItem>}
+          {collection && <MenuItem value=""><em>Transfer to</em></MenuItem>}
+          {context.collection.map((c) => {
+            return (
+              <MenuItem value={c.id} key={c.id}>{c.name}</MenuItem>
+            );
+          })}  
+        </Select>
+        </div>
+     
+        <CardMedia
+          className={classes.media}
+          image={
+            cover_edition_key
+              ? `http://covers.openlibrary.org/b/olid/${cover_edition_key}-M.jpg`
               : noImage
           }
+          title="cover"
         />
-        <h4>
-          {" "}
-          <strong>author:</strong> {author}
-          <select onChange={onAdd}>
-            {context.collection.map((c) => (
-               <option value={c.id}>{c.name}</option>
-            ))}
-          </select>
-        </h4>
-      </div>
-      <img
-        className="book__image"
-        src={
-          edition_key
-            ? `http://covers.openlibrary.org/b/olid/${edition_key}-M.jpg`
-            : noImage
-        }
-        alt="book-cover"
-      />
-      <h4 className="book__publish_year">
-        <strong> first publish year:</strong>
-        {publish_year}
-      </h4>
+        <CardContent>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {`Author : ${author_name}`}
+          </Typography>
+        </CardContent>
+      </Card>
     </div>
   );
 };

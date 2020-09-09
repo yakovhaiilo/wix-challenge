@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { Collections } from "./pages/Collections/Collections";
 import { BooksSearch } from "./pages/BooksSearch/BooksSearch";
 import { Header } from "./components/Header";
-import CollectionContextProvider from './context/CollectionContext'
+import CollectionContextProvider from './context/CollectionContext';
 
 const App = () => {
   return (

@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from 'uuid';
 
+import "./BookSearch.css";
+
+//MuI
 import { Container, Grid } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import Book from "../../components/book/Book";
 import Spiner from "../../components/spiner/Spiner";
-import "./BookSearch.css";
 
 export const BooksSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
+
   const fatchBooks = async () => {
+    if(!searchTerm) return;
     setIsLoading(true);
     try {
       const response = await axios.get(
@@ -28,19 +34,21 @@ export const BooksSearch = () => {
       setIsLoading(false);
     }
   };
-  // console.log(books);
+
   return (
     <div className="booksSearch">
-      <div className="booksSearch__box">
-        <input
+      <div className="booksSearch__form">
+        <TextField
+          id="standard-basic"
+          label="search for a book"
           value={searchTerm}
-          type="text"
           onChange={handleChange}
-          placeholder="search for a book"
-          className="booksSearch__txt"
         />
-        <button onClick={fatchBooks}>search</button>
+        <Button variant="contained" onClick={fatchBooks} color="secondary">
+          search
+        </Button>
       </div>
+
       <Container>
         <Grid
           container
@@ -49,17 +57,7 @@ export const BooksSearch = () => {
           alignItems="center"
         >
           {!isLoading ? (
-            books.map((book, i) => (
-              <div key={uuidv4()}>
-                <Book
-                  id={uuidv4()}
-                  edition_key={book.cover_edition_key}
-                  publish_year={book.first_publish_year}
-                  author={book.author_name}
-                  book={book}
-                />
-              </div>
-            ))
+            books.map((book, i) => <Book book={book} key={i} />)
           ) : (
             <Spiner />
           )}
