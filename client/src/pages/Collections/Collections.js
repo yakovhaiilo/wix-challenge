@@ -26,23 +26,24 @@ export const Collections = () => {
     context.removeColection(id);
   };
 
-  const editHandler = (id) => {
-    setOnEdit({ ...onEdit, [id]: true });
-  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    // console.log(name,value)
     setNewVal({ ...newVal, [name]: value });
+  };
+
+  const editHandler = (id) => {
+    setOnEdit({ ...onEdit, [id]: true });
   };
 
   const saveColl = (id) => {
     setOnEdit({ ...onEdit, [id]: false });
     const name = newVal[id];
-    // console.log(name)
+    if(!name) return;
     context.editColection(id, name);
   };
-
+    
+ 
   return (
     <div className="collections">
       <div className="collections__form">
@@ -61,7 +62,7 @@ export const Collections = () => {
           const btnIcon = onEdit[coll.id] ? <DoneIcon /> : <EditIcon />;
           const onCLick = onEdit[coll.id] ? saveColl : editHandler;
           return (
-            <div key={i} className="collection__header">
+            <div key={i} className="collection__container">
               {!onEdit[coll.id] && <h2>{coll.name}</h2>}
               {onEdit[coll.id] && (
                 <TextField

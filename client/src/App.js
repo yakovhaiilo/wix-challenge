@@ -14,7 +14,7 @@ const App = () => {
         <Switch>
           <Route exact path="/search" render={(props) => (<BooksSearch {...props} />)}/>
           <Route exac path="/collections"render={(props) => (<Collections {...props}/>)}/>
-          <Route path="/" render={(props) => (<BooksSearch {...props}/>)}/>
+          <Route exact  path="/" render={(props) => (<BooksSearch {...props}/>)}/>
         </Switch>
       </main>
       </CollectionContextProvider>

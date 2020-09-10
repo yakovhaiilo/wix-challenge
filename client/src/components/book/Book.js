@@ -28,7 +28,10 @@ const Book = ({ book, collection }) => {
     if (!colId) return;
     context.addBook(colId, book, collection);
   }
-
+  const filterOptions = option => {
+    if(!collection) return true;
+    return  option.name !== collection.name
+  }
   return (
     <div className="book">
       <Card className={classes.root}>
@@ -59,7 +62,7 @@ const Book = ({ book, collection }) => {
           <Select defaultValue="" id="grouped-select" onChange={onAdd} >
           {!collection && <MenuItem value=""><em>Select collection</em></MenuItem>}
           {collection && <MenuItem value=""><em>Transfer to</em></MenuItem>}
-          {context.collection.map((c) => {
+          {context.collection.filter(filterOptions).map((c) => {
             return (
               <MenuItem value={c.id} key={c.id}>{c.name}</MenuItem>
             );

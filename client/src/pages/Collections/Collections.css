@@ -3,14 +3,11 @@
     padding: 40px;
 }
 
-.collections__form {
-    /* border: 1px solid black; */
-}
 .collections__form button { 
     margin-left: 10px;
     margin-top: 12px;
 }
-.collection__header{
+.collection__container{
     border: 3px solid white;
     box-shadow: 1px 4px 20px -6px rgba(0, 0, 0, 0.75);
     padding: 10px;

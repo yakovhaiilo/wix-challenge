@@ -11,7 +11,10 @@ const CollectionContextProvider = (props) => {
   const addBook = (id, book, existsColl) => {
     const newColl = collection.map((col) => {
       if (col.id === Number(id)) {
-        col.books.push(book);
+         const exsistsBook = col.books.find(function(exsist){ return exsist.key === book.key })
+         if(!exsistsBook) {
+           col.books.push(book);
+        } 
       }
       return col;
     });
@@ -20,6 +23,7 @@ const CollectionContextProvider = (props) => {
       removeBook(existsColl.id, book.key);
     }
   };
+  
   const removeBook = (id, key) => {
     const newColl = collection.map((col) => {
       if (col.id === id) {
