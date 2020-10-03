@@ -1,5 +1,10 @@
 import React, { useContext, useState } from "react";
 import { collectionContext } from "../../context/CollectionContext";
+
+import Book from "../../components/Book/Book";
+import "./Collections.css";
+
+// Mui
 import { Container, Grid } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
@@ -7,10 +12,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import Book from "../../components/book/Book";
-import "./Collections.css";
 
-export const Collections = () => {
+import { ToastContainer } from 'react-toastify';
+
+export const Collections = (props) => {
   const [name, setName] = useState("");
   const [onEdit, setOnEdit] = useState({});
   const [newVal, setNewVal] = useState({});
@@ -25,7 +30,6 @@ export const Collections = () => {
   const RemoveHandler = (id) => {
     context.removeColection(id);
   };
-
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -43,9 +47,9 @@ export const Collections = () => {
     context.editColection(id, name);
   };
     
- 
   return (
     <div className="collections">
+      <ToastContainer />
       <div className="collections__form">
         <TextField
           id="standard-basic"
@@ -80,9 +84,12 @@ export const Collections = () => {
               >
                 <DeleteIcon />
               </IconButton>
-              <IconButton value={coll.id} onClick={() => onCLick(coll.id)}>
+              <IconButton
+               value={coll.id} 
+               onClick={() => onCLick(coll.id)}>
                 {btnIcon}
               </IconButton>
+
               <div className="collections__items">
                 <Container>
                   <Grid
